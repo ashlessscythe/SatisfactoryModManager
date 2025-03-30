@@ -1,19 +1,14 @@
-import { join } from 'path';
-
-import { skeleton } from '@skeletonlabs/tw-plugin';
-import containerQueries from '@tailwindcss/container-queries';
 import type { Config } from 'tailwindcss';
-
+import { skeleton } from '@skeletonlabs/tw-plugin';
 import { myCustomTheme } from './smmTheme';
+import containerQueries from '@tailwindcss/container-queries';
 
+/** @type {import('tailwindcss').Config} */
 const config = {
   darkMode: 'class',
   content: [
     './src/**/*.{html,js,svelte,ts}',
-    join(require.resolve(
-      '@skeletonlabs/skeleton'),
-    '../**/*.{html,js,svelte,ts}',
-    ),
+    './node_modules/@skeletonlabs/skeleton/**/*.{html,js,svelte,ts}'
   ],
   theme: {
     extend: {
@@ -27,6 +22,12 @@ const config = {
     containerQueries,
     skeleton({
       themes: {
+        preset: [
+          {
+            name: 'skeleton',
+            enhancements: true,
+          },
+        ],
         custom: [
           myCustomTheme,
         ],

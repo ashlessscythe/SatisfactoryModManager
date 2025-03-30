@@ -2,6 +2,8 @@ import path from 'path';
 
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { defineConfig } from 'vite';
+import { skeleton } from '@skeletonlabs/tw-plugin';
+import { myCustomTheme } from './smmTheme';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,10 +19,25 @@ export default defineConfig({
         }
       },
     }),
+    skeleton({
+      themes: {
+        preset: [
+          { name: 'skeleton', enhancements: true }
+        ],
+        custom: [
+          myCustomTheme
+        ]
+      }
+    })
   ],
   optimizeDeps: {
     exclude: ['@urql/svelte'],
-    include: ['lodash.get', 'lodash.isequal', 'lodash.clonedeep'],
+    include: [
+      'lodash.get', 
+      'lodash.isequal', 
+      'lodash.clonedeep',
+      '@skeletonlabs/skeleton'
+    ],
   },
   publicDir: 'static',
   resolve: {
