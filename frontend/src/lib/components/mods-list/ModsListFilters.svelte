@@ -5,7 +5,7 @@
   import Marquee from '$lib/components/Marquee.svelte';
   import SvgIcon from '$lib/components/SVGIcon.svelte';
   import Select from '$lib/components/Select.svelte';
-  import { type FilterField, type OrderByField, filter, filterOptions, order, orderByOptions, search } from '$lib/store/modFiltersStore';
+  import { type FilterField, type OrderByField, filter, filter2, filterOptions, filterOptions2, order, orderByOptions, search } from '$lib/store/modFiltersStore';
 
   const { t } = getTranslate();
 
@@ -28,6 +28,7 @@
     'not-installed': $t('mods-list-filter.filter.not-installed', 'Not installed'),
     enabled: $t('mods-list-filter.filter.enabled', 'Enabled'),
     disabled: $t('mods-list-filter.filter.disabled', 'Disabled'),
+    none: $t('mods-list-filter.filter.none', 'Select 2nd filter'),
   } as Record<FilterField, string>;
 </script>
 
@@ -45,27 +46,50 @@
       <SvgIcon class="h-5 w-5 text-error-500/80" icon={mdiClose} />
     </button>
   </div>
-  <Select
-    name="modsFilter"
-    class="!h-full"
-    buttonClass="px-2 text-sm space-x-1"
-    itemActiveClass="!bg-surface-300/20"
-    itemClass="bg-surface-50-900-token"
-    itemKey="id"
-    items={filterOptions}
-    menuClass="min-w-[10rem]"
-    bind:value={$filter}
-  >
-    <svelte:fragment slot="selected" let:item>
-      <div class="h-5 w-5">
-        <SvgIcon icon={mdiFilter} />
-      </div>
-      <Marquee class="text-primary-600 hidden @lg/mod-list-filters:!block w-24 text-left">{filterNames[item.id]}</Marquee>
-    </svelte:fragment>
-    <svelte:fragment slot="item" let:item>
-      <span>{filterNames[item.id]}</span>
-    </svelte:fragment>
-  </Select>
+  <div class="flex gap-2">
+    <Select
+      name="modsFilter"
+      class="!h-full"
+      buttonClass="px-2 text-sm space-x-1"
+      itemActiveClass="!bg-surface-300/20"
+      itemClass="bg-surface-50-900-token"
+      itemKey="id"
+      items={filterOptions}
+      menuClass="min-w-[10rem]"
+      bind:value={$filter}
+    >
+      <svelte:fragment slot="selected" let:item>
+        <div class="h-5 w-5">
+          <SvgIcon icon={mdiFilter} />
+        </div>
+        <Marquee class="text-primary-600 hidden @lg/mod-list-filters:!block w-24 text-left">{filterNames[item.id]}</Marquee>
+      </svelte:fragment>
+      <svelte:fragment slot="item" let:item>
+        <span>{filterNames[item.id]}</span>
+      </svelte:fragment>
+    </Select>
+    <Select
+      name="modsFilter2"
+      class="!h-full"
+      buttonClass="px-2 text-sm space-x-1"
+      itemActiveClass="!bg-surface-300/20"
+      itemClass="bg-surface-50-900-token"
+      itemKey="id"
+      items={filterOptions2}
+      menuClass="min-w-[10rem]"
+      bind:value={$filter2}
+    >
+      <svelte:fragment slot="selected" let:item>
+        <div class="h-5 w-5">
+          <SvgIcon icon={mdiFilter} />
+        </div>
+        <Marquee class="text-primary-600 hidden @lg/mod-list-filters:!block w-24 text-left">{filterNames[item.id]}</Marquee>
+      </svelte:fragment>
+      <svelte:fragment slot="item" let:item>
+        <span>{filterNames[item.id]}</span>
+      </svelte:fragment>
+    </Select>
+  </div>
   <Select
     name="modsOrderBy"
     class="!h-full"
@@ -88,4 +112,3 @@
     </svelte:fragment>
   </Select>
 </div>
-

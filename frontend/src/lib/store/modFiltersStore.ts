@@ -10,7 +10,7 @@ import { getCompatibility } from '$lib/utils/modCompatibility';
 import { GetModFiltersFilter, GetModFiltersOrder, SetModFiltersFilter, SetModFiltersOrder } from '$wailsjs/go/settings/settings';
 
 export type OrderByField = 'name' | 'last-updated' | 'popularity' | 'hotness' | 'views' | 'downloads';
-export type FilterField = 'all' | 'compatible' | 'favorite' | 'queued' | 'installed' | 'dependency' | 'not-installed' | 'enabled' | 'disabled';
+export type FilterField = 'all' | 'compatible' | 'favorite' | 'queued' | 'installed' | 'dependency' | 'not-installed' | 'enabled' | 'disabled' | 'none';
 
 export interface OrderBy {
   id: OrderByField;
@@ -81,3 +81,11 @@ export const filter = bindingTwoWayNoExcept(filterOptions[0], {
 }, {
   updateFunction: async (f) => SetModFiltersFilter(f.id),
 });
+
+// Second filter with a default no-op option
+export const filterOptions2 = [
+  { id: 'none' as FilterField, func: () => true },
+  ...filterOptions
+];
+
+export const filter2 = writable(filterOptions2[0]);
